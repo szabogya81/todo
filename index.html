@@ -7,7 +7,46 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    
+    <header>
+        <h1>Daily To-Do list manager</h1>
+    </header>
+    <main class="todo">
+        <h2 class="todo__day">DAY</h2>
+        <h2 class="todo__date">DATE</h2>
+        <section class="todo__add">
+            <input type="text" class="input--add" placeholder="Take the garbage out">
+            <button class="btn btn--add">+</div>
+        </section>
+        <section class="todo__pending">
+            <p>You have 0 pending items</p>
+            <ul class="todoList">
+                <!-- <li>
+                    <input class="todo-checkbox" type="checkbox" value="1">
+                    <span class="todo-text">do it</span>
+                    <span class="delete">🗑</span>
+                </li>
+                <li>
+                    <input class="todo-checkbox" type="checkbox" value="2">
+                    <span class="todo-text">do it also</span>
+                    <span class="delete">🗑</span>
+                </li> -->
+            </ul>
+        </section>
+        <section class="todo__completed">
+            <p>Completed tasks: 50%</p>
+            <ul>
+                <li>pukk</li>
+                <li>mukk</li>
+            </ul>
+        </section>
+        <section class="todo__manage">
+            <label for="btn--hide" class="manage manage--hide">Show/Hide Complete</label>
+            <button id="btn btn--hide" class="btn btn--hide"></button>
+            <label for="btn--clear" class="manage manage--clear">Clear All</label>
+            <button id="btn--clear" class="btn btn--clear"></button>
+        </section>
+    </main>
+
     <script src="./js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,124 @@
+*{
+    box-sizing: border-box;
+  }
+  
+body {
+    background-color: #fefefe;
+    background-image: linear-gradient(#c7d63c 0%, #cf5626 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #444;
+    font-family: cursive, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+h1 {
+    color: #fff;
+    font-size: 1.6rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+h2 {
+    margin: 0;
+}
+
+section {
+    display: flex;
+}
+
+.todo {
+    background-color: #f4f7fc;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto 50px;
+    max-width: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    padding: 40px 20px;
+    width: 20rem;
+}
+
+.todo__add {
+    margin-top: .5rem;
+}
+.todo__pending, .todo__completed {
+    display: flex;
+    flex-direction: column;
+}
+
+.todoList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.todoList li{
+    margin: 10px 0;
+    background: #e0e8f5;
+    border-radius: 3px;
+    padding-left: 38px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-right: 49px;
+    overflow: hidden;
+}
+
+ul.todo-list li .delete{
+    position: absolute;
+    height: 100%;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0;
+    width: 0;
+    background-color: #f56468;
+    color: #fff;
+    transition: all ease-in 0.25s;
+}
+
+.todo__manage {
+    justify-content: center;
+}
+
+.manage--hide {
+    padding-right: 2rem;
+}
+
+.btn, input {
+    line-height: 2em;
+    border-radius: 3px;
+    border: 0;
+    display: inline-block;
+    margin: 15px 0;
+    padding: 0.2em 1em;
+    font-size: 1em;
+}
+  
+.btn--hide, .btn--clear{
+    display: none;
+}
+
+
+input[type='text'] {
+    border: 1px solid #ddd; 
+    min-width: 80%;
+    transition: all ease-in 0.25s;
+}
+
+input:focus{
+    outline: none;
+    border: 1px solid #a3b1ff;
+}
+
+input::placeholder{
+    color: rgba(0,0,0,0.3);
+    font-style: italic;
+}
