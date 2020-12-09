@@ -9,6 +9,7 @@ const showHideButton = document.querySelector('.btn--hide');
 const todoCompletedSection = document.querySelector('.todo__completed');
 const todoList = document.querySelector('.todo__pending .todoList');
 const todoListCompleted = document.querySelector('.todo__completed .todoList');
+const zeroTaskParagraph = document.querySelector('.zeroTask');
 
 let latestTaskId;
 
@@ -57,11 +58,17 @@ function init() {
     if(!latestTaskId) { latestTaskId = 0; }
     updatePendingTasks();
     setButtonEvenetHandlers();
+    setCompleteHandlers();
     setDateHeadings();
 }
 
+function setCompleteHandlers() {
+    let completeCheckBoxes = document.querySelectorAll('.todoList__checkbox');
+    completeCheckBoxes.forEach(item => item.addEventListener('change', completePendingTask));
+}
+
 function setDeleteHandlers() {
-    let deleteSpans = document.querySelectorAll('.delete');
+    let deleteSpans = document.querySelectorAll('.todoList__delete');
     deleteSpans.forEach(item => item.addEventListener('click', deletePendingTask));
 }
 
@@ -98,17 +105,47 @@ function addNewTask() {
     }  
 }
 
-function addTaskToList(task) {
-    let liItem = document.createElement('li');
-    liItem.innerHTML = createTaskListItem(task[0], task[1]);;
-    todoList.appendChild(liItem);
+function addTaskToList(task, isNew = true) {
+    let liItem = createTaskListItem(task[0], task[1], isNew);
+    if(isNew) { 
+        todoList.appendChild(liItem); 
+    } else {
+        if(todoListCompleted.hasChildNodes) {
+            todoListCompleted.insertBefore(liItem, todoListCompleted.childNodes[0]);
+        } else {
+            todoListCompleted.appendChild(liItem);
+        }
+    }
 }
 
-function createTaskListItem(taskId, taskName) {
-    let liItem = `<input class="todo-checkbox" type="checkbox" value="${taskId}">
-        <span class="todo-text">${taskName}</span>
-        <span class="delete">🗑</span>`
+function createTaskListItem(taskId, taskName, isNew = true) {
+    let liItem = document.createElement('li');
+    liItem.innerHTML = createTaskListItemInner(taskId, taskName, isNew);
+    if(!isNew) { liItem.classList.add('completed'); }
     return liItem;
+}
+
+function createTaskListItemInner(taskId, taskName, isNew) {
+    let liInner= `<input class="todoList__checkbox" type="checkbox" value="${taskId}">
+        <span class="todoList__text">${taskName}</span>`
+        liInner += isNew ? '<span class="todoList__delete">🗑</span>' : '';
+    return liInner;
+}
+
+function completePendingTask(e) {
+    if(this.checked) {
+        let taskId = e.currentTarget.value;
+        let taskName = e.currentTarget.parentElement.children[1].textContent;
+        storageHandler.removeTask(taskId);
+        addTaskToList([taskId, taskName], false);
+        updatePendingTasks();
+        checkCompleted();
+    }
+}
+
+function checkCompleted() {
+    let completeCheckBoxes = document.querySelectorAll('li.completed .todoList__checkbox');
+    completeCheckBoxes.forEach(checkBox => checkBox.checked = 'checked');
 }
 
 function deletePendingTask(e) {
@@ -129,7 +166,17 @@ function updatePendingTasks() {
     let pendingTasks = storageHandler.getTasks();
     pendingTasks.forEach(task => addTaskToList(task));
     setDeleteHandlers();
+    setCompleteHandlers();
     setTaskStatistics(pendingTasks.length, todoListCompleted.childElementCount);
+    checkTaskList(!pendingTasks.length);
+}
+
+function checkTaskList(noTask) {
+    if(noTask) {
+        zeroTaskParagraph.classList.add('show');
+    } else {
+        zeroTaskParagraph.classList.remove('show');
+    }
 }
 
 function showHideCompleted(e) {
@@ -140,4 +187,4 @@ function showHideCompleted(e) {
     setTaskStatistics(todoList.childElementCount, todoListCompleted.childElementCount);
 }
 
-init();
+init(); 

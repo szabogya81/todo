@@ -75,6 +75,25 @@ section {
     flex-direction: column;
 }
 
+.todo__pending, .todo__completed {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo__pending .zeroTask {
+    display: none;
+}
+
+.todo__pending .zeroTask.show {
+    animation-duration: 0.75s;
+    animation-name: tasksDone;
+    color: #ce0631;
+    display: block;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
 .todoList {
     list-style-type: none;
     margin: 0;
@@ -91,7 +110,7 @@ ul.todoList li {
     width: 100%;
 }
 
-ul.todoList li.new {
+ul.todoList li.new, li.completed {
     animation-duration: 0.75s;
     animation-name: newTask;
 }
@@ -101,12 +120,20 @@ ul.todoList li.new {
 }
 
 .todo__completed.show {
-    background: #eee;
-    display: inline-block;
+    display: block;
+}
+
+.todo__completed.show .todoList {
+    
+    display: block;
     margin-bottom: 1rem;
 }
 
-ul.todoList li:hover > span.delete {
+.todo__completed.show .todoList li {
+    background: rgb(170, 233, 181);
+}
+
+ul.todoList li:hover > span.todoList__delete {
     background-color: #f56468;
     color: #fff;
     cursor: pointer;
@@ -127,7 +154,7 @@ ul.todoList li.completed input {
     pointer-events: none;
 }
 
-ul.todoList li span.todo-text {
+ul.todoList li span.todoList__text {
     line-height: 1.8rem;
     margin: 0.5rem 0;
     overflow: hidden;
@@ -135,12 +162,12 @@ ul.todoList li span.todo-text {
     width: 70%;
 }
 
-ul.todoList li.completed span.todo-text {
+ul.todoList li.completed span.todoList__text {
     text-decoration:line-through;
     width: 90%;
 }
 
-span.delete {
+span.todoList__delete {
     background-color: #f56468;
     border-radius: 0 3px 3px 0;
     color: #fff;
@@ -153,20 +180,6 @@ span.delete {
     transition: all ease-in 0.25s;
     width: 20%;
 }
-
-ul.todo-list li .delete{
-    background-color: #f56468;
-    color: #fff;
-    cursor: pointer;
-    height: 100%;
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: all ease-in 0.25s;
-    width: 0;
-  }
 
 .todo__manage {
     justify-content: center;
@@ -213,5 +226,22 @@ input::placeholder{
 
 	to {
 		transform: perspective(50rem);
+	}
+}
+
+@keyframes tasksDone {
+	from {
+		animation-timing-function: ease-in;
+		opacity: 0;
+		transform: scale(0)
+    }
+    
+	50% {
+		opacity: 1;
+		transform: scale(1.5);
+    }
+    
+	to {
+		transform: scale(1);
 	}
 }
