@@ -14,7 +14,7 @@ const zeroTaskParagraph = document.querySelector('.zeroTask');
 let latestTaskId;
 
 const storageHandler = {
-    addTask(taskName) { return addTask(taskName); },
+    addTask(taskName) { return addTask(this, taskName); },
     removeTask(taskId) { removeTask(taskId); },
     clear() { deleteTasks(); },
     getTasks() { return getTasks(); },
@@ -22,10 +22,10 @@ const storageHandler = {
     setLatestTaskId(taskId) { setLatestTaskId(taskId); }
 }
 
-function addTask(taskName) {
+function addTask(handler, taskName) {
     let newTaskId = 'dTask_' + String(latestTaskId + 1).padStart(3, '0');
     localStorage.setItem(newTaskId, taskName);
-    storageHandler.setLatestTaskId(++latestTaskId);
+    handler.setLatestTaskId(++latestTaskId);
     return newTaskId;
 }
 
